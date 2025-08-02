@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'Colfax-Regular';
+    src: url(./fonts/Colfax-Regular.otf) format('opentype');
+}
+@font-face {
+    font-family: 'Colfax-Medium';
+    src: url(./fonts//Colfax-Medium.otf) format('opentype');
+}
