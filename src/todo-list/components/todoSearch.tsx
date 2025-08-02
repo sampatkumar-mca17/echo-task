@@ -13,12 +13,7 @@ function todoSearch() {
       debounceTime(500),
       map((event: any) => event.target.value) 
     ).subscribe((event)=>{
-      console.log(event);
-      let filteredTodos = stateData.data
-      if(event?.length){
-        filteredTodos = stateData.data?.filter((todo:Todo)=>todo.title.toLowerCase().includes(event.toLowerCase()))
-      }
-      dispatch({type:"SET_FILTERED_TODOS", payload:filteredTodos})
+      dispatch({type:"SET_SEARCH_KEY", payload:event})
     })
     return ()=>subscription.unsubscribe();
   },[])

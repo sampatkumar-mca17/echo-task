@@ -15,6 +15,7 @@ export interface InitialData {
     data:Todo[],
     filteredData:Todo[],
     isLoading:boolean,
-    error:Error | null
+    error:Error | null,
+    searchKey:string
 }
     

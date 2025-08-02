@@ -5,18 +5,18 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { RouterProvider } from 'react-router'
 import { Routes } from './route-config'
 import TodoProvider from './contexts/TodoProvider.tsx'
-import { Theme } from '@radix-ui/themes'
 import { Toaster } from 'sonner'
+import { ThemeProvider } from './components/ui/theme-provider.tsx'
 const queryClient= new QueryClient()
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    <Theme>
+    <ThemeProvider defaultTheme='light'>
       <TodoProvider>
           <RouterProvider router={Routes}/>
-          <Toaster/>
+          <Toaster theme='system'/>
       </TodoProvider>
-    </Theme>
+    </ThemeProvider>
     </QueryClientProvider>
   </StrictMode>,
 )

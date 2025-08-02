@@ -1,5 +1,5 @@
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
-import { Trash2 } from 'lucide-react'
+import { Loader, Trash2 } from 'lucide-react'
 import type{ Todo } from '@/model/todo.model'
 import React, { useContext, useEffect, useRef } from 'react'
 import { TodoContext } from '@/contexts/TodoContexts'
@@ -18,8 +18,8 @@ function TodoDelete({todo}: {todo: Todo}) {
     }
     useEffect(()=>{
         if(apiDetails.data){
-         const updatedData = stateData.data.filter((todoData:Todo)=>todoData._id!==todo._id);
-         const updatedFilteredData = stateData.filteredData.filter((todoData:Todo)=>todoData._id!==todo._id);
+         const updatedData = stateData.data.filter((todoData:Todo)=>(todoData._id??todoData?.id)!==(todo._id??todo.id));
+         const updatedFilteredData = stateData.filteredData.filter((todoData:Todo)=>(todoData._id??todoData?.id)!==(todo._id??todo.id));
          dispatch({type:"SET_TODOS", payload:updatedData})
          dispatch({type:"SET_FILTERED_TODOS", payload:updatedFilteredData})
          toast("Todo deleted successfully");
@@ -39,9 +39,11 @@ function TodoDelete({todo}: {todo: Todo}) {
         </DialogHeader>
         <DialogFooter className='flex flex-row gap-2 justify-end'>
             <DialogClose asChild onClick={()=>abortController.current?.abort()}>
-                <Button variant="secondary" >Cancel</Button>
+                <Button className='cursor-pointer' variant="secondary" >Cancel</Button>
             </DialogClose>
-            <Button disabled={apiDetails.isLoading} variant="destructive" onClick={handleDelete}>Delete</Button>
+            <Button disabled={apiDetails.isLoading} className='cursor-pointer' variant="destructive" onClick={handleDelete}>
+                {apiDetails.isLoading ? <Loader className='animate-spin'/> : "Delete"}
+            </Button>
         </DialogFooter>
     </DialogContent>
 </Dialog>

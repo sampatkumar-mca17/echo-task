@@ -4,5 +4,6 @@ export const INITIAL_DATA = {
     data:[] as  Todo[],
     filteredData:[] as  Todo[],
     isLoading:false,
-    error:null
+    error:null,
+    searchKey:''
 }

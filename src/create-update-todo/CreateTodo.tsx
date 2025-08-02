@@ -8,6 +8,7 @@ import { useTodo } from '@/custom-hooks/useTodo'
 import type { Todo } from '@/model/todo.model'
 import { TodoContext } from '@/contexts/TodoContexts'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
   function CreateTodo() {
   const navigate = useNavigate();
   const params = useParams();
@@ -24,7 +25,9 @@ import { toast } from 'sonner'
       else{
         addTodoList(todoList)
       }
-      toast(`Todo ${params.id ? "updated" : "created"} successfully`)
+      toast(`Todo ${params.id ? "updated" : "created"} successfully`,{
+        action:<Button variant="default" onClick={()=>navigate("/")}>Goto List</Button>
+      })
     }
     if(apiDetails.error){
       toast(`Todo ${params.id ? "update" : "creation"} failed`)
@@ -42,7 +45,7 @@ import { toast } from 'sonner'
 
   function updateTodoList(todoList:Todo[] | null){
     const updatedData = {...dataToBeUpdated,...apiDetails.data?.data}
-    const updatedTodoList:Todo[] | null = todoList?.map((todo:Todo)=>todo._id===dataToBeUpdated?._id?updatedData:todo) as Todo[]
+    const updatedTodoList:Todo[] | null = todoList?.map((todo:Todo)=>((todo._id??todo?.id)!==(dataToBeUpdated?._id??dataToBeUpdated?.id))?todo:updatedData) as Todo[]
     if(updatedTodoList){
       dispatch({type:"SET_TODOS", payload:updatedTodoList})
     }
@@ -117,7 +120,7 @@ const noDataFoundHTML = (
 )
   return (
     <div className='create-todo-container h-[100vh] flex flex-col gap-2'>
-    <Header title="Add Task" onBack={()=>navigate("/")}/>
+    <Header title="Add Task" onBack={()=>{abortController?.current?.abort(); navigate("/")}}/>
     <div className='create-todo-content p-2 flex flex-col gap-2 z-10'>
       {(!params.id || dataToBeUpdated) ? createTodoHTML : noDataFoundHTML}
     </div>

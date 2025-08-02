@@ -59,7 +59,6 @@ export const updateTodo = async(todo:Todo, signal?: AbortSignal):Promise<Todo> =
 }
 
 export const deleteTodo = async(todo:Todo, signal?: AbortSignal):Promise<Todo> => {
-    console.log(signal);
     try{
         const response = await fetch(`https://shrimo.com/fake-api/todos/${todo._id??todo?.id}`, {
             method: "DELETE",
