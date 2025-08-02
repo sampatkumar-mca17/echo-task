@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import "./TodoContent.scss"
+import React from 'react'
 import { Edit } from 'lucide-react'
 import type { Todo } from '@/model/todo.model'
 import { todoStatusesColors } from '../constants/todo-constants'
