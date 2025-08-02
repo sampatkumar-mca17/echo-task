@@ -29,8 +29,9 @@ import { Button } from '@/components/ui/button'
         action:<Button variant="default" onClick={()=>navigate("/")}>Goto List</Button>
       })
     }
-    if(apiDetails.error){
+    else if(apiDetails.error){
       toast(`Todo ${params.id ? "update" : "creation"} failed`)
+      callApi(null);
     }
   },[apiDetails])
 

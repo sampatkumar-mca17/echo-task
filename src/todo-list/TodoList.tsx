@@ -8,6 +8,8 @@ import { getTodos } from '@/services/todo.service'
 import type { Todo } from '@/model/todo.model'
 import Header from '@/reusable-components/Header'
 import { useNavigate } from 'react-router'
+import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
 function TodoList() {
   const navigate = useNavigate();
   const {stateData, dispatch} = useContext(TodoContext)  
@@ -27,6 +29,13 @@ function TodoList() {
         dispatch({type:"SET_FILTERED_TODOS", payload:apiDetails.data as Todo[]})
         dispatch({type:"SET_LOADING", payload:apiDetails.isLoading as boolean})
         dispatch({type:"SET_ERROR", payload:apiDetails.error as Error | null})
+    }
+
+    if(apiDetails.error){
+        callApi(null);
+        toast("Failed to fetch todos", {
+            action:<Button onClick={()=>callApi(true)}> Retry? </Button>
+        })
     }
   }, [apiDetails])
   return (

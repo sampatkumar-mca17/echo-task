@@ -24,6 +24,10 @@ function TodoDelete({todo}: {todo: Todo}) {
          dispatch({type:"SET_FILTERED_TODOS", payload:updatedFilteredData})
          toast("Todo deleted successfully");
         }
+        else if(apiDetails.error){
+            toast("Failed to delete "+todo.title);
+            callApi(null);
+        }
     },[apiDetails])
   return (
     <Dialog>
